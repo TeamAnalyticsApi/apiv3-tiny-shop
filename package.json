@@ -29,6 +29,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.prod.aws.intraxiti.com:AnalyticsAPI/utilities/apiv3-tiny-shop.git"
+    "url": "https://github.com/TeamAnalyticsApi/apiv3-tiny-shop.git"
   }
 }
