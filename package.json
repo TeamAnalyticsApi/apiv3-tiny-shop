@@ -1,0 +1,34 @@
+{
+  "name": "apiv3-tinyshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently --kill-others \"nodemon mock/index.js\" \"nodemon src/index.js\"",
+    "start:mock": "node mock/index.js",
+    "start:api": "node src/index.js",
+    "reinit:mock": "node mock/scripts/init.js",
+    "test": "cross-env NODE_ENV=test mocha test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "got": "^11.8.3",
+    "node-json-db": "^1.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "mocha": "^9.2.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.prod.aws.intraxiti.com:AnalyticsAPI/utilities/apiv3-tiny-shop.git"
+  }
+}

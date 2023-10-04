@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "0c3d8a81-0b74-4f1b-abbe-90ff8c5eca6c",
+		"name": "Test technique",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Mock",
+			"item": [
+				{
+					"name": "GET product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8293/products/100",
+							"host": [
+								"localhost"
+							],
+							"port": "8293",
+							"path": [
+								"products",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8293/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8293",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all carts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8293/carts",
+							"host": [
+								"localhost"
+							],
+							"port": "8293",
+							"path": [
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cart by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8293/carts/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8293",
+							"path": [
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add product to cart",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8293/carts/1/products/98",
+							"host": [
+								"localhost"
+							],
+							"port": "8293",
+							"path": [
+								"carts",
+								"1",
+								"products",
+								"98"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove last cart's product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8293/carts/1/products/last",
+							"host": [
+								"localhost"
+							],
+							"port": "8293",
+							"path": [
+								"carts",
+								"1",
+								"products",
+								"last"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "GET top cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8294/carts/top",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8294",
+							"path": [
+								"carts",
+								"top"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cart by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8294/carts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8294",
+							"path": [
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add product to cart",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8294/carts/1/products/98",
+							"host": [
+								"localhost"
+							],
+							"port": "8294",
+							"path": [
+								"carts",
+								"1",
+								"products",
+								"98"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
