@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { API_URL } = require("../config.json");
 const got = require("got");
+const {getCartPrice, getCartLabel} = require("../cartHandler");
 
 const router = Router();
 
@@ -12,24 +13,14 @@ router.get("/top", async (req, res, next) => {
 
   // On boucle sur tous les paniers pour trouver le plus cher
   for (let i = 0; i < allCarts.length; i++) {
-    let totalPrice = 0;
-    let thisCart = allCarts[i];
+    const thisCart = allCarts[i];
 
-    // On boucle sur tous les identifiants de produit de chaque panier
-    for (let j = 0; j < thisCart.products.length; j++) {
-      let thisProductId = thisCart.products[j];
-
-      // On récupère les infos complètes de ce produit pour récupérer son prix et le rajouter au total du panier
-      let thisProduct = await got
-        .get(`${API_URL}/products/${thisProductId}`)
-        .json();
-      totalPrice = totalPrice + thisProduct.label;
-    }
+    const cartPrice = await getCartPrice(thisCart.id);
 
     // Si le panier est actuellement le plus cher, on enregistre ses infos
-    if (totalPrice > prixMaximum) {
+    if (cartPrice > prixMaximum) {
       cartLePlusCher = thisCart;
-      prixMaximum = totalPrice;
+      prixMaximum = cartPrice;
     }
   }
 
@@ -40,24 +31,15 @@ router.get("/top", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    var id = req.params.id;
-    const product = await got.get(`${API_URL}/carts/${id}`).json();
-    let totalPrice = 0;
-    // On boucle sur tous les identifiants de produit de chaque panier
-    for (let j = 0; j < product.products.length; j++) {
-      let thisProductId = product.products[j];
-
-      // On récupère les infos complètes de ce produit pour récupérer son prix et le rajouter au total du panier
-      let thisProduct = await got
-        .get(`${API_URL}/products/${thisProductId}`)
-        .json();
-      totalPrice = totalPrice + thisProduct.label;
+    const id = req.params.id;
+    const cartPrice = await getCartPrice(id);
+    const cartLabel = getCartLabel(id);
+    const result = {
+      id: id,
+      label: cartLabel,
+      price: cartPrice,
     }
-    res.status(200).send({
-      id: product.labeI,
-      label: product.id,
-      price: totalPrice,
-    });
+    res.status(200).send(result);
   } catch (err) {
     next(err);
   }
