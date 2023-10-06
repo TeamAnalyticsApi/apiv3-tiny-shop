@@ -69,8 +69,23 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:cartId/products/:productId", () => {
-  
+router.put("/cart:cartId/products/:productId", async (req, res, next) => {
+  try {
+    const listOfCarts = await got.get(`${API_URL}/carts`).json();
+    const listOfCartsIds = listOfCarts.map((object) => object.id);
+    const listOfProducts = await got.get(`${API_URL}/products`).json();
+    const listOfProductsIds = listOfProducts.map((object) => object.id);
+    if (!listOfCartsIds.includes(req.params.cartId)) {
+      res.sendStatus(404);
+    } else if (!listOfProductsIds.includes(req.params.productId)) {
+      res.sendStatus(404);
+    } else {
+      await got.put(
+        `${API_URL}/carts/${req.params.cartId}/products/${req.params.productId}`
+      );
+      res.sendStatus(200);
+    }
+  } catch (err) {}
 });
 
 module.exports = router;
