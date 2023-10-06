@@ -15,7 +15,7 @@ describe("carts routes", () => {
     it("should return the most expensive cart's informations", async () => {
       const res = await request(app).get("/carts/top").expect(200);
       expect(res.body).to.deep.equal({
-        cartId: "cart9",
+        cartId: "9",
         cartPrice: 509490,
       });
     });
