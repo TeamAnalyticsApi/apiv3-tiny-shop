@@ -23,7 +23,7 @@ router.get("/top", async (req, res, next) => {
       let thisProduct = await got
         .get(`${API_URL}/products/${thisProductId}`)
         .json();
-      totalPrice = totalPrice + thisProduct.label;
+      totalPrice = totalPrice + thisProduct.price;
     }
 
     // Si le panier est actuellement le plus cher, on enregistre ses infos
@@ -40,31 +40,37 @@ router.get("/top", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    var id = req.params.id;
-    const product = await got.get(`${API_URL}/carts/${id}`).json();
-    let totalPrice = 0;
-    // On boucle sur tous les identifiants de produit de chaque panier
-    for (let j = 0; j < product.products.length; j++) {
-      let thisProductId = product.products[j];
+    const listOfCarts = await got.get(`${API_URL}/carts`).json();
+    const listOfIds = listOfCarts.map((object) => object.id);
+    if (!listOfIds.includes(req.params.id)) {
+      res.sendStatus(404);
+    } else {
+      var id = req.params.id;
+      const cart = await got.get(`${API_URL}/carts/${id}`).json();
+      let totalPrice = 0;
+      // On boucle sur tous les identifiants de produit de chaque panier
+      for (let j = 0; j < cart.products.length; j++) {
+        let thisProductId = cart.products[j];
 
-      // On récupère les infos complètes de ce produit pour récupérer son prix et le rajouter au total du panier
-      let thisProduct = await got
-        .get(`${API_URL}/products/${thisProductId}`)
-        .json();
-      totalPrice = totalPrice + thisProduct.label;
+        // On récupère les infos complètes de ce produit pour récupérer son prix et le rajouter au total du panier
+        let thisProduct = await got
+          .get(`${API_URL}/products/${thisProductId}`)
+          .json();
+        totalPrice = totalPrice + thisProduct.price;
+      }
+      res.status(200).send({
+        id: cart.id,
+        label: cart.label,
+        price: totalPrice,
+      });
     }
-    res.status(200).send({
-      id: product.labeI,
-      label: product.id,
-      price: totalPrice,
-    });
   } catch (err) {
-    next(err);
+    res.sendStatus(404);
   }
 });
 
 router.put("/:cartId/products/:productId", () => {
-  res.status(500).send("Not implemented");
+  
 });
 
 module.exports = router;
